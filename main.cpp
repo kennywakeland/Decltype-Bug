@@ -88,7 +88,7 @@ int main()
     (woo.*f)(3);
 
     H_TEST_VALUE(woo, Red, 3);
-    //H_TEST_VALUE(woo, Green, 3);
+    H_TEST_VALUE(woo, Green, 3);
     H_TEST_VALUE(woo, Blue, 3);
 
 }
