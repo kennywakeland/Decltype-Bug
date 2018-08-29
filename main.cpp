@@ -2,6 +2,7 @@
 // Created by kenny on 8/29/18.
 //
 
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -10,12 +11,12 @@
 #define H_STR_HELPER(x) #x
 #define H_STR(x) H_STR_HELPER(x)
 
-#define H_GET_VALUE(OBGEC_ON, VAL_NAME) OBGEC_ON.get##VAL_NAME
-#define H_SET_VALUE_ONE(OBGEC_ON, VAL_NAME) set##VAL_NAME
+#define H_GET_VALUE(VAL_NAME) get##VAL_NAME
+#define H_SET_VALUE_ONE(VAL_NAME) set##VAL_NAME
 
 #define H_TEST_VALUE(OBGEC_ON, VAL_NAME, TEST_VALL) \
-H_TEST_VALUE_GET_SET(H_GET_VALUE(OBGEC_ON, VAL_NAME), \
-                     H_SET_VALUE_ONE(OBGEC_ON, VAL_NAME), \
+H_TEST_VALUE_GET_SET(H_GET_VALUE(VAL_NAME), \
+                     H_SET_VALUE_ONE(VAL_NAME), \
                      OBGEC_ON, VAL_NAME, TEST_VALL)
 
 
@@ -23,11 +24,11 @@ H_TEST_VALUE_GET_SET(H_GET_VALUE(OBGEC_ON, VAL_NAME), \
 {                                                              \
     auto test_vall_stor = TEST_VALL;                           \
     if(HTestSet(OBGEC_ON, &decltype(OBGEC_ON)::SET_CALL, test_vall_stor)){       \
-        if( GET_CALL() == test_vall_stor){       \
-           testFail("The Erorr equal " #SET_CALL " -- " H_STR(test_vall_stor) " ."); \
+        if(OBGEC_ON.GET_CALL() != test_vall_stor){       \
+           TEST_FAIL("The Erorr equal " #SET_CALL " -- " H_STR(test_vall_stor) " ."); \
         }                                                      \
     }else{                                                     \
-        testFail("The equal " #SET_CALL " is not working on " H_STR(test_vall_stor) " .");  \
+        TEST_FAIL("The equal " #SET_CALL " is not working on " H_STR(test_vall_stor) " .");  \
     }                                                          \
 }
 
@@ -46,7 +47,7 @@ HTestSet(Obj& o, void (Obj::*f)(Vt), Vt_2 v)
     return true;
 }
 
-void testFail(std::string /*o*/) {}
+#define TEST_FAIL(error) return 1;
 
 class BaseClass
 {
@@ -91,4 +92,5 @@ int main()
     H_TEST_VALUE(woo, Green, 3);
     H_TEST_VALUE(woo, Blue, 3);
 
+    return 0;
 }
