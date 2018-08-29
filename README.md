@@ -1,6 +1,10 @@
 # Decltype-Bug
 Decltype Bug
 
+https://coliru.stacked-crooked.com/a/443f03625728f00e
+
+# Output
+
 ```
 g++ -std=c++11 -O2 -Wall -pedantic -pthread main.cpp && ./a.out
 
